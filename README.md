@@ -1,4 +1,4 @@
-
+APLICATIVO DE VOTAÇÂO
 
 Foi criado o repositório de nome voting-app-aks para a o deploy do Cluster e aplicação no Azure.
 
@@ -67,3 +67,19 @@ kubectl apply -f voting-app.yaml
 Para visualizar o IP externo de acesso ao aplicativo "deployado".
 
 kubectl get service azure-vote-front --watch
+
+Após ver o IP de acesso a aplicação na web, executei os comando Git:
+
+Git init
+
+Git commit -a
+
+Git Push
+
+O Git push gerou um erro referente a arquivos grandes não permitidos no Github. 
+
+Usei o seguinte comando para resolver o erro mencionado.
+
+git filter-branch -f --index-filter 'git rm --cached -r --ignore-unmatch .terraform/'
+
+git push -f origin main
