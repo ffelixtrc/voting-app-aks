@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: azure-vote-back
+spec:
+  replicas: 1  # Especifica que queremos apenas uma réplica do deployment
+  selector:  # Define o seletor para o deployment
+    matchLabels:  # Define as labels que devem corresponder
+      app: azure-vote-back  # A label "app" deve ser "azure-vote-back"
+  template:  # Define o template para as pods geradas pelo deployment
+    metadata:
+      labels:
+        app: azure-vote-back  # Labels para as pods geradas
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": linux  # Seleciona nós com o sistema operacional Linux
+      containers:
+      - name: azure-vote-back  # Nome do container
+        image: mcr.microsoft.com/oss/bitnami/redis:6.0.8  # Imagem do container
+        env:  # Variáveis de ambiente para o container
+        - name: ALLOW_EMPTY_PASSWORD
+          value: "yes"
+        resources:  # Define recursos (CPU e memória) para o container
+          requests:  # Recursos requeridos
+            cpu: 100m  # Requisição de CPU
+            memory: 128Mi  # Requisição de memória
+          limits:  # Limites de recursos
+            cpu: 250m  # Limite de CPU
+            memory: 256Mi  # Limite de memória
+        ports:  # Mapeamento de portas
+        - containerPort: 6379  # Porta do container (Redis)
+          name: redis  # Nome da porta
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: azure-vote-back  # Nome do serviço
+spec:
+  ports:  # Portas para o serviço
+  - port: 6379  # Porta exposta pelo serviço
+  selector:  # Define o seletor para o serviço
+    app: azure-vote-back  # A label "app" deve ser "azure-vote-back"
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: azure-vote-front
+spec:
+  replicas: 1  # Especifica que queremos apenas uma réplica do deployment
+  selector:  # Define o seletor para o deployment
+    matchLabels:  # Define as labels que devem corresponder
+      app: azure-vote-front  # A label "app" deve ser "azure-vote-front"
+  template:  # Define o template para as pods geradas pelo deployment
+    metadata:
+      labels:
+        app: azure-vote-front  # Labels para as pods geradas
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": linux  # Seleciona nós com o sistema operacional Linux
+      containers:
+      - name: azure-vote-front  # Nome do container
+        image: mcr.microsoft.com/azuredocs/azure-vote-front:v1  # Imagem do container
+        resources:  # Define recursos (CPU e memória) para o container
+          requests:  # Recursos requeridos
+            cpu: 100m  # Requisição de CPU
+            memory: 128Mi  # Requisição de memória
+          limits:  # Limites de recursos
+            cpu: 250m  # Limite de CPU
+            memory: 256Mi  # Limite de memória
+        ports:  # Mapeamento de portas
+        - containerPort: 80  # Porta do container (aplicação web)
+        env:  # Variáveis de ambiente para o container
+        - name: REDIS  # Nome da variável de ambiente
+          value: "azure-vote-back"  # Valor da variável de ambiente
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: azure-vote-front  # Nome do serviço
+spec:
+  type: LoadBalancer  # Define o tipo de serviço como LoadBalancer
+  ports:  # Portas para o serviço
+  - port: 80  # Porta exposta pelo serviço
+  selector:  # Define o seletor para o serviço
+    app: azure-vote-front  # A label "app" deve ser "azure-vote-front"
