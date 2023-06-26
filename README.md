@@ -84,6 +84,12 @@ git filter-branch -f --index-filter 'git rm --cached -r --ignore-unmatch .terraf
 
 git push -f origin main
 
-A Api de votação está acessivel em:
+
+
+O aplicativo de votação que está rodando no cluster está acessivel em:
+
+http://52.191.97.119/
+
+ou
 
 http://votacao.felix.trc.br
