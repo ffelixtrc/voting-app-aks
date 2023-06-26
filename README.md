@@ -83,3 +83,7 @@ Usei o seguinte comando para resolver o erro mencionado.
 git filter-branch -f --index-filter 'git rm --cached -r --ignore-unmatch .terraform/'
 
 git push -f origin main
+
+A Api de votação está acessivel em:
+
+http://votacao.felix.trc.br
