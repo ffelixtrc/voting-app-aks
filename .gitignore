@@ -1,2 +1,3 @@
-*.
-*.lock.hcl
+azurek8s
+.terraform.lock.hcl
+terraform.tfstate
