@@ -1,1 +1,2 @@
-.azurek8s
+*.
+*.lock.hcl
