@@ -93,3 +93,8 @@ http://52.191.97.119/
 ou
 
 http://votacao.felix.trc.br
+
+
+Foi criado o manifesto voting-app-hpa.yaml para aplicação do HPA.
+Ele está configurado para acrescentar até 10 réplicas baseando-se em uso de CPU, onde ao 
+atingir 50% de uso do processamento, novas réplicas são criadas.
