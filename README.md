@@ -88,7 +88,7 @@ git push -f origin main
 
 O aplicativo de votação que está rodando no cluster está acessivel em:
 
-http://52.191.97.119/
+http://20.237.83.204
 
 ou
 
